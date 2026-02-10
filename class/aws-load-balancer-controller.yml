@@ -9,7 +9,7 @@ parameters:
         input_type: helm
         output_type: yaml
         input_paths:
-          # Vendored upstream chart
+          # Vendored upstream chart (see `vendor/aws-load-balancer-controller`)
           - ${_base_directory}/vendor/aws-load-balancer-controller/helm/aws-load-balancer-controller
         helm_values: ${aws_load_balancer_controller:helmValues}
         helm_params:
