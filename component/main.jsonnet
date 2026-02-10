@@ -7,4 +7,5 @@ local params = inv.parameters.aws_load_balancer_controller;
 
 // Define outputs below
 {
+  '00_namespace': kube.Namespace(params.namespace),
 }

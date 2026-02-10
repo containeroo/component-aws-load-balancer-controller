@@ -10,6 +10,41 @@ default:: `syn-aws-load-balancer-controller`
 
 The namespace in which to deploy this component.
 
+== `clusterName`
+
+[horizontal]
+type:: string
+default:: `${cluster:name}`
+
+The Kubernetes cluster name passed to the upstream helm chart.
+This value must be non-empty, otherwise the chart rendering fails.
+
+== `enableCertManager`
+
+[horizontal]
+type:: boolean
+default:: `true`
+
+Whether to enable cert-manager integration in the upstream helm chart.
+With cert-manager enabled, the chart won't template a random TLS Secret for the webhook.
+
+== `serviceAccountAnnotations`
+
+[horizontal]
+type:: dict
+default:: `{}`
+
+Additional annotations added to the controller ServiceAccount.
+Commonly used to configure IRSA, for example `eks.amazonaws.com/role-arn`.
+
+== `monitoring`
+
+[horizontal]
+type:: dict
+default:: `{"enabled": false, "namespace": null, "labels": {}}`
+
+Configuration for the helm chart's optional `ServiceMonitor` resource.
+
 
 == Example
 

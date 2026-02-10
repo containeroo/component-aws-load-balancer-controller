@@ -5,7 +5,25 @@ parameters:
           - ${_base_directory}/component/app.jsonnet
         input_type: jsonnet
         output_path: .
-      - input_paths:
-          - ${_base_directory}/component/main.jsonnet
+      - output_path: ${_instance}/01_aws_load_balancer_controller_helmchart
+        input_type: helm
+        output_type: yaml
+        input_paths:
+          # Vendored upstream chart
+          - ${_base_directory}/vendor/aws-load-balancer-controller/helm/aws-load-balancer-controller
+        helm_values: ${aws_load_balancer_controller:helmValues}
+        helm_params:
+          name: ${aws_load_balancer_controller:helmReleaseName}
+          namespace: '${aws_load_balancer_controller:namespace}'
+      - output_path: ${_instance}
         input_type: jsonnet
-        output_path: aws-load-balancer-controller/
+        output_type: yaml
+        input_paths:
+          - ${_base_directory}/component/main.jsonnet
+
+  commodore:
+    postprocess:
+      filters:
+        - type: jsonnet
+          path: ${_instance}/01_aws_load_balancer_controller_helmchart/aws-load-balancer-controller/crds
+          filter: postprocess/patch_crds.jsonnet

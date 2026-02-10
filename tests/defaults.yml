@@ -1,3 +1,9 @@
 # Overwrite parameters here
 
 # parameters: {...}
+
+parameters:
+  # Needed because the upstream helm chart requires `.Values.clusterName` to be
+  # set to a non-empty value.
+  cluster:
+    name: test-cluster
