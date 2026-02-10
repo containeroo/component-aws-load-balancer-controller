@@ -1,0 +1,6 @@
+name: aws-load-balancer-controller
+title: aws-load-balancer-controller
+version: master
+start_page: ROOT:index.adoc
+nav:
+  - modules/ROOT/partials/nav.adoc

@@ -1,0 +1,5 @@
+parameters:
+  aws_load_balancer_controller:
+    =_metadata:
+      multi_tenant: true
+    namespace: syn-aws-load-balancer-controller
