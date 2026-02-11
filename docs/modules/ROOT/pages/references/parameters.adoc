@@ -2,53 +2,89 @@
 
 The parent key for all of the following parameters is `aws_load_balancer_controller`.
 
+== `name`
+
+[horizontal]
+type:: string
+default:: `aws-load-balancer-controller`
+
+Release name used for the Helm deployment.
+
 == `namespace`
 
 [horizontal]
 type:: string
-default:: `syn-aws-load-balancer-controller`
+default:: `kube-system`
 
 The namespace in which to deploy this component.
 
-== `clusterName`
+== `charts.aws_load_balancer_controller.source`
+
+[horizontal]
+type:: string
+default:: `https://aws.github.io/eks-charts`
+
+Upstream Helm repository URL for `aws-load-balancer-controller`.
+
+== `charts.aws_load_balancer_controller.version`
+
+[horizontal]
+type:: string
+default:: `3.0.0`
+
+Upstream Helm chart version to deploy.
+
+== `images.controller.repository`
+
+[horizontal]
+type:: string
+default:: `public.ecr.aws/eks/aws-load-balancer-controller`
+
+Controller image repository used in chart values.
+
+== `images.controller.tag`
+
+[horizontal]
+type:: string
+default:: `v3.0.0`
+
+Controller image tag used in chart values.
+
+== `helm_values`
+
+[horizontal]
+type:: dict
+default:: `{"clusterName": "${cluster:name}", "image": "${aws_load_balancer_controller:images:controller}"}`
+
+Values passed directly to the upstream Helm chart.
+For all available chart values, see https://artifacthub.io/packages/helm/aws/aws-load-balancer-controller[Artifact Hub].
+
+== `helm_values.clusterName`
 
 [horizontal]
 type:: string
 default:: `${cluster:name}`
 
-The Kubernetes cluster name passed to the upstream helm chart.
-This value must be non-empty, otherwise the chart rendering fails.
+Kubernetes cluster name passed to the Helm chart.
 
-== `enableCertManager`
-
-[horizontal]
-type:: boolean
-default:: `true`
-
-Whether to enable cert-manager integration in the upstream helm chart.
-With cert-manager enabled, the chart won't template a random TLS Secret for the webhook.
-
-== `serviceAccountAnnotations`
+== `helm_values.image`
 
 [horizontal]
 type:: dict
-default:: `{}`
+default:: `${aws_load_balancer_controller:images:controller}`
 
-Additional annotations added to the controller ServiceAccount.
-Commonly used to configure IRSA, for example `eks.amazonaws.com/role-arn`.
-
-== `monitoring`
-
-[horizontal]
-type:: dict
-default:: `{"enabled": false, "namespace": null, "labels": {}}`
-
-Configuration for the helm chart's optional `ServiceMonitor` resource.
-
+Image configuration map passed to the Helm chart.
 
 == Example
 
 [source,yaml]
 ----
-namespace: example-namespace
+aws_load_balancer_controller:
+  namespace: kube-system
+  charts:
+    aws_load_balancer_controller:
+      version: 3.0.0
+  images:
+    controller:
+      tag: v3.0.0
 ----

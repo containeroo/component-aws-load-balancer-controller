@@ -1,47 +1,19 @@
+---
 parameters:
   aws_load_balancer_controller:
-    =_metadata:
-      multi_tenant: true
-    namespace: syn-aws-load-balancer-controller
+    name: aws-load-balancer-controller
+    namespace: kube-system
 
-    helmReleaseName: aws-load-balancer-controller
-
-    # Configure helm values to be passed to the chart.
-    #
-    # NOTE: The upstream chart requires `clusterName` to be set to a non-empty
-    # value, otherwise templating fails.
-    clusterName: ${cluster:name}
-
-    enableCertManager: true
-
-    serviceAccountAnnotations: {}
+    charts:
+      aws_load_balancer_controller:
+        source: https://aws.github.io/eks-charts
+        version: 3.0.0
 
     images:
       controller:
         repository: public.ecr.aws/eks/aws-load-balancer-controller
         tag: v3.0.0
-        pullPolicy: IfNotPresent
 
-    # Monitoring configuration for the chart's optional ServiceMonitor resource.
-    monitoring:
-      enabled: false
-      namespace: null
-      labels: {}
-
-    helmValues:
-      clusterName: ${aws_load_balancer_controller:clusterName}
-
+    helm_values:
+      clusterName: ${cluster:name}
       image: ${aws_load_balancer_controller:images:controller}
-
-      serviceAccount:
-        create: true
-        annotations: ${aws_load_balancer_controller:serviceAccountAnnotations}
-
-      # GitOps-friendly default: avoid `genCA` / `genSignedCert` templating which
-      # would otherwise cause a diff on every compile.
-      enableCertManager: ${aws_load_balancer_controller:enableCertManager}
-
-      serviceMonitor:
-        enabled: ${aws_load_balancer_controller:monitoring:enabled}
-        namespace: ${aws_load_balancer_controller:monitoring:namespace}
-        additionalLabels: ${aws_load_balancer_controller:monitoring:labels}

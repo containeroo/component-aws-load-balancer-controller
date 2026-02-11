@@ -1,29 +1,29 @@
+---
 parameters:
   kapitan:
+    dependencies:
+      - type: helm
+        source: ${aws_load_balancer_controller:charts:aws_load_balancer_controller:source}
+        chart_name: aws-load-balancer-controller
+        version: ${aws_load_balancer_controller:charts:aws_load_balancer_controller:version}
+        output_path: dependencies/aws-load-balancer-controller/helmcharts/aws-load-balancer-controller-${aws_load_balancer_controller:charts:aws_load_balancer_controller:version}
     compile:
       - input_paths:
-          - ${_base_directory}/component/app.jsonnet
+          - aws-load-balancer-controller/component/app.jsonnet
         input_type: jsonnet
         output_path: .
-      - output_path: ${_instance}/01_aws_load_balancer_controller_helmchart
+      - output_path: aws-load-balancer-controller/10_aws_load_balancer_controller_helmchart
         input_type: helm
         output_type: yaml
         input_paths:
-          # Vendored upstream chart (see `vendor/aws-load-balancer-controller`)
-          - ${_base_directory}/vendor/aws-load-balancer-controller/helm/aws-load-balancer-controller
-        helm_values: ${aws_load_balancer_controller:helmValues}
+          - dependencies/aws-load-balancer-controller/helmcharts/aws-load-balancer-controller-${aws_load_balancer_controller:charts:aws_load_balancer_controller:version}
+        helm_values: ${aws_load_balancer_controller:helm_values}
         helm_params:
-          name: ${aws_load_balancer_controller:helmReleaseName}
-          namespace: '${aws_load_balancer_controller:namespace}'
-      - output_path: ${_instance}
-        input_type: jsonnet
-        output_type: yaml
-        input_paths:
-          - ${_base_directory}/component/main.jsonnet
-
+          name: ${aws_load_balancer_controller:name}
+          namespace: "${aws_load_balancer_controller:namespace}"
   commodore:
     postprocess:
       filters:
         - type: jsonnet
-          path: ${_instance}/01_aws_load_balancer_controller_helmchart/aws-load-balancer-controller/crds
-          filter: postprocess/patch_crds.jsonnet
+          path: aws-load-balancer-controller/10_aws_load_balancer_controller_helmchart/aws-load-balancer-controller/crds
+          filter: postprocess/drop_null_objects.jsonnet
