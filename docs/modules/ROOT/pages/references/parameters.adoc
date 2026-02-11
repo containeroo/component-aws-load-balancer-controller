@@ -54,7 +54,7 @@ Controller image tag used in chart values.
 
 [horizontal]
 type:: dict
-default:: `{"clusterName": "${cluster:name}", "image": "${aws_load_balancer_controller:images:controller}"}`
+default:: `{"clusterName": "${cluster:name}", "image": "${aws_load_balancer_controller:images:controller}", "enableCertManager": true}`
 
 Values passed directly to the upstream Helm chart.
 For all available chart values, see https://artifacthub.io/packages/helm/aws/aws-load-balancer-controller[Artifact Hub].
@@ -74,6 +74,17 @@ type:: dict
 default:: `${aws_load_balancer_controller:images:controller}`
 
 Image configuration map passed to the Helm chart.
+
+== `helm_values.enableCertManager`
+
+[horizontal]
+type:: boolean
+default:: `true`
+
+Enable cert-manager integration for webhook certificates.
+This keeps rendered manifests deterministic across compiles.
+cert-manager is a hard dependency for this component.
+Deploy cert-manager with https://github.com/projectsyn/component-cert-manager[projectsyn/component-cert-manager].
 
 == Example
 

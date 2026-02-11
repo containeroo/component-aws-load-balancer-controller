@@ -17,3 +17,4 @@ parameters:
     helm_values:
       clusterName: ${cluster:name}
       image: ${aws_load_balancer_controller:images:controller}
+      enableCertManager: true

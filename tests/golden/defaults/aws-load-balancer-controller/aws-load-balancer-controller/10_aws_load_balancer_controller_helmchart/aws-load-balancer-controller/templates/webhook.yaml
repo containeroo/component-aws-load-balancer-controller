@@ -1,23 +1,8 @@
-apiVersion: v1
-data:
-  ca.crt: dGVzdC1jYQ==
-  tls.crt: dGVzdC1jZXJ0
-  tls.key: dGVzdC1rZXk=
-kind: Secret
-metadata:
-  labels:
-    app.kubernetes.io/instance: aws-load-balancer-controller
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: aws-load-balancer-controller
-    app.kubernetes.io/version: v3.0.0
-    helm.sh/chart: aws-load-balancer-controller-3.0.0
-  name: aws-load-balancer-tls
-  namespace: kube-system
-type: kubernetes.io/tls
----
 apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingWebhookConfiguration
 metadata:
+  annotations:
+    cert-manager.io/inject-ca-from: kube-system/aws-load-balancer-serving-cert
   labels:
     app.kubernetes.io/instance: aws-load-balancer-controller
     app.kubernetes.io/managed-by: Helm
@@ -29,7 +14,6 @@ webhooks:
   - admissionReviewVersions:
       - v1beta1
     clientConfig:
-      caBundle: dGVzdC1jYQ==
       service:
         name: aws-load-balancer-webhook-service
         namespace: kube-system
@@ -61,7 +45,6 @@ webhooks:
   - admissionReviewVersions:
       - v1beta1
     clientConfig:
-      caBundle: dGVzdC1jYQ==
       service:
         name: aws-load-balancer-webhook-service
         namespace: kube-system
@@ -93,7 +76,6 @@ webhooks:
   - admissionReviewVersions:
       - v1beta1
     clientConfig:
-      caBundle: dGVzdC1jYQ==
       service:
         name: aws-load-balancer-webhook-service
         namespace: kube-system
@@ -119,7 +101,6 @@ webhooks:
   - admissionReviewVersions:
       - v1beta1
     clientConfig:
-      caBundle: dGVzdC1jYQ==
       service:
         name: aws-load-balancer-webhook-service
         namespace: kube-system
@@ -155,7 +136,6 @@ webhooks:
   - admissionReviewVersions:
       - v1beta1
     clientConfig:
-      caBundle: dGVzdC1jYQ==
       service:
         name: aws-load-balancer-webhook-service
         namespace: kube-system
@@ -189,7 +169,6 @@ webhooks:
   - admissionReviewVersions:
       - v1beta1
     clientConfig:
-      caBundle: dGVzdC1jYQ==
       service:
         name: aws-load-balancer-webhook-service
         namespace: kube-system
@@ -211,6 +190,8 @@ webhooks:
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
+  annotations:
+    cert-manager.io/inject-ca-from: kube-system/aws-load-balancer-serving-cert
   labels:
     app.kubernetes.io/instance: aws-load-balancer-controller
     app.kubernetes.io/managed-by: Helm
@@ -222,7 +203,6 @@ webhooks:
   - admissionReviewVersions:
       - v1beta1
     clientConfig:
-      caBundle: dGVzdC1jYQ==
       service:
         name: aws-load-balancer-webhook-service
         namespace: kube-system
@@ -249,7 +229,6 @@ webhooks:
   - admissionReviewVersions:
       - v1beta1
     clientConfig:
-      caBundle: dGVzdC1jYQ==
       service:
         name: aws-load-balancer-webhook-service
         namespace: kube-system
@@ -270,7 +249,6 @@ webhooks:
   - admissionReviewVersions:
       - v1beta1
     clientConfig:
-      caBundle: dGVzdC1jYQ==
       service:
         name: aws-load-balancer-webhook-service
         namespace: kube-system
@@ -289,3 +267,25 @@ webhooks:
         resources:
           - ingresses
     sideEffects: None
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  labels:
+    app.kubernetes.io/instance: aws-load-balancer-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: aws-load-balancer-controller
+    app.kubernetes.io/version: v3.0.0
+    helm.sh/chart: aws-load-balancer-controller-3.0.0
+  name: aws-load-balancer-serving-cert
+  namespace: kube-system
+spec:
+  dnsNames:
+    - aws-load-balancer-webhook-service.kube-system.svc
+    - aws-load-balancer-webhook-service.kube-system.svc.cluster.local
+  duration: 8760h0m0s
+  issuerRef:
+    kind: Issuer
+    name: aws-load-balancer-root-issuer
+  renewBefore: 720h0m0s
+  secretName: aws-load-balancer-tls

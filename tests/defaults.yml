@@ -3,10 +3,6 @@ parameters:
   aws_load_balancer_controller:
     helm_values:
       clusterName: test-cluster
-      webhookTLS:
-        caCert: test-ca
-        cert: test-cert
-        key: test-key
       serviceAccount:
         annotations:
           eks.amazonaws.com/role-arn: arn:aws:iam::123456789012:role/test-role

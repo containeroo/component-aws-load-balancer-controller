@@ -2,4 +2,7 @@
 
 aws-load-balancer-controller is a Commodore component to manage aws-load-balancer-controller.
 
+This component has a hard dependency on cert-manager.
+Use the cert-manager Commodore component to deploy it: https://github.com/projectsyn/component-cert-manager[projectsyn/component-cert-manager].
+
 See the xref:references/parameters.adoc[parameters] reference for further details.
