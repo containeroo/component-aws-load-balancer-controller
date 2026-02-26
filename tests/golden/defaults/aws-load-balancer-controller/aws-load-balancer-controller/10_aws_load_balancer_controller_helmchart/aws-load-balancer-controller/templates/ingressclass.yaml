@@ -7,8 +7,8 @@ items:
         app.kubernetes.io/instance: aws-load-balancer-controller
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: aws-load-balancer-controller
-        app.kubernetes.io/version: v3.0.0
-        helm.sh/chart: aws-load-balancer-controller-3.0.0
+        app.kubernetes.io/version: v3.1.0
+        helm.sh/chart: aws-load-balancer-controller-3.1.0
       name: alb
   - apiVersion: networking.k8s.io/v1
     kind: IngressClass
@@ -17,8 +17,8 @@ items:
         app.kubernetes.io/instance: aws-load-balancer-controller
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: aws-load-balancer-controller
-        app.kubernetes.io/version: v3.0.0
-        helm.sh/chart: aws-load-balancer-controller-3.0.0
+        app.kubernetes.io/version: v3.1.0
+        helm.sh/chart: aws-load-balancer-controller-3.1.0
       name: alb
     spec:
       controller: ingress.k8s.aws/alb

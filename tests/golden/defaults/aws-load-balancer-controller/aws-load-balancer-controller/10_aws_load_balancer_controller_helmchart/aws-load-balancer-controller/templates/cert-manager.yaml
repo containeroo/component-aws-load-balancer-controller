@@ -5,8 +5,8 @@ metadata:
     app.kubernetes.io/instance: aws-load-balancer-controller
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: aws-load-balancer-controller
-    app.kubernetes.io/version: v3.0.0
-    helm.sh/chart: aws-load-balancer-controller-3.0.0
+    app.kubernetes.io/version: v3.1.0
+    helm.sh/chart: aws-load-balancer-controller-3.1.0
   name: aws-load-balancer-root-cert
   namespace: kube-system
 spec:
@@ -27,8 +27,8 @@ metadata:
     app.kubernetes.io/instance: aws-load-balancer-controller
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: aws-load-balancer-controller
-    app.kubernetes.io/version: v3.0.0
-    helm.sh/chart: aws-load-balancer-controller-3.0.0
+    app.kubernetes.io/version: v3.1.0
+    helm.sh/chart: aws-load-balancer-controller-3.1.0
   name: aws-load-balancer-selfsigned-issuer
   namespace: kube-system
 spec:
@@ -41,8 +41,8 @@ metadata:
     app.kubernetes.io/instance: aws-load-balancer-controller
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: aws-load-balancer-controller
-    app.kubernetes.io/version: v3.0.0
-    helm.sh/chart: aws-load-balancer-controller-3.0.0
+    app.kubernetes.io/version: v3.1.0
+    helm.sh/chart: aws-load-balancer-controller-3.1.0
   name: aws-load-balancer-root-issuer
   namespace: kube-system
 spec:
