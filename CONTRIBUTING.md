@@ -3,4 +3,4 @@
 This code repository is part of Project Syn and the contribution guide at
 https://syn.tools/syn/about/contribution_guide.html does apply.
 
-Submit Pull Requests at https://github.com/projectsyn/component-aws-load-balancer-controller/pulls.
+Submit Pull Requests at https://github.com/containeroo/component-aws-load-balancer-controller/pulls.

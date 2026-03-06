@@ -3,10 +3,10 @@ parameters:
   kapitan:
     dependencies:
       - type: helm
-        source: ${aws_load_balancer_controller:charts:aws_load_balancer_controller:source}
+        source: ${aws_load_balancer_controller:charts:aws-load-balancer-controller:source}
         chart_name: aws-load-balancer-controller
-        version: ${aws_load_balancer_controller:charts:aws_load_balancer_controller:version}
-        output_path: dependencies/aws-load-balancer-controller/helmcharts/aws-load-balancer-controller-${aws_load_balancer_controller:charts:aws_load_balancer_controller:version}
+        version: ${aws_load_balancer_controller:charts:aws-load-balancer-controller:version}
+        output_path: dependencies/aws-load-balancer-controller/helmcharts/aws-load-balancer-controller-${aws_load_balancer_controller:charts:aws-load-balancer-controller:version}
     compile:
       - input_paths:
           - aws-load-balancer-controller/component/app.jsonnet
@@ -16,7 +16,7 @@ parameters:
         input_type: helm
         output_type: yaml
         input_paths:
-          - dependencies/aws-load-balancer-controller/helmcharts/aws-load-balancer-controller-${aws_load_balancer_controller:charts:aws_load_balancer_controller:version}
+          - dependencies/aws-load-balancer-controller/helmcharts/aws-load-balancer-controller-${aws_load_balancer_controller:charts:aws-load-balancer-controller:version}
         helm_values: ${aws_load_balancer_controller:helm_values}
         helm_params:
           name: ${aws_load_balancer_controller:name}

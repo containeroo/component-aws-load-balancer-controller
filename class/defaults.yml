@@ -5,7 +5,7 @@ parameters:
     namespace: kube-system
 
     charts:
-      aws_load_balancer_controller:
+      aws-load-balancer-controller:
         source: https://aws.github.io/eks-charts
         version: 3.1.0
 
