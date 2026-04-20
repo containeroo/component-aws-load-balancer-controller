@@ -7,7 +7,7 @@ parameters:
     charts:
       aws-load-balancer-controller:
         source: https://aws.github.io/eks-charts
-        version: 3.2.1
+        version: 3.2.2
 
     images:
       controller:
